@@ -1,0 +1,53 @@
+#+title: ML1 — Predicción de precios de vivienda (regresión)
+#+author: Pythonisas
+#+date: 2026-04-24
+
+* ML1 — Predicción de precios de vivienda (regresión)
+
+Este lab construye un mini-sistema reproducible que estima el *precio* de una vivienda a partir de características simples.
+
+- Trabajo: *tríos*
+- Ejecutable: *terminal* (scripts Python)
+
+** Estructura
+#+begin_example
+ml-vivienda-ml1/
+├─ data/
+│  ├─ README.md
+│  └─ viviendas.csv            (opcional: dataset de ejemplo)
+├─ docs/
+│  ├─ practica-ml-precio-vivienda.org
+│  ├─ mi-precio-vivienda_ML1.md
+│  └─ conseguir-dataset-CAM.md
+├─ models/                     (se crea al entrenar)
+├─ src/
+│  ├─ train_incompleto.py
+│  ├─ predict_incompleto.py
+│  ├─ features.py
+│  └─ utils.py
+└─ requirements.txt
+#+end_example
+
+** Instalación
+#+begin_src bash
+cd ml-vivienda-ml1
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+#+end_src
+
+** Entrenar
+#+begin_src bash
+python3 src/train_incompleto.py --data data/viviendas.csv --save
+#+end_src
+
+** Predecir (CLI)
+#+begin_src bash
+python3 src/predict_incompleto.py --m2 75 --habitaciones 3 --banos 2 --zona centro --antiguedad 10
+#+end_src
+
+Si no pasas argumentos, el script preguntará por pantalla.
+
+** Documentación
+La guía principal está en:
+- [[file:docs/practica-ml-precio-vivienda.org][docs/practica-ml-precio-vivienda.org]]

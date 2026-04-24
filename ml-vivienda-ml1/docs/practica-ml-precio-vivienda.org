@@ -1,0 +1,93 @@
+#+hugo_base_dir: ../../
+#+hugo_section: posts
+
+* DONE Práctica ML 1 — Predicción de precios de vivienda (Regresión)
+CLOSED: [2026-04-24 Fri 12:00]
+:PROPERTIES:
+:EXPORT_FILE_NAME: practica-ml-precio-vivienda
+:EXPORT_HUGO_SECTION: posts
+:EXPORT_HUGO_PUBLISHDATE: 2026-04-24
+:EXPORT_HUGO_URL: /ml-vivienda/
+:EXPORT_HUGO_TAGS: prácticas machine-learning
+:END:
+
+[[/images/ml-houses.jpg]]
+
+** Objetivo
+Construir un mini‑sistema *reproducible* que estime el *precio* de una vivienda a partir de características simples y que se pueda ejecutar desde la terminal.
+
+#+begin_quote
+Esto NO va de “adivinar el precio perfecto”.
+Va de aprender el flujo real: datos → preprocesado → modelo → evaluación → guardar → predecir.
+#+end_quote
+
+** Forma de trabajo
+- Trabajo en *tríos*.
+- Ejecutable: *terminal* (scripts Python).
+- Se valora: robustez, claridad, reproducibilidad.
+
+** Entregables
+- Carpeta =ml-vivienda/= con la estructura indicada.
+- Scripts: =src/train.py=, =src/predict.py=, =src/features.py=, =src/utils.py=.
+- Dataset: =data/viviendas.csv= (ideal: 200–500 filas) y =README.org=.
+- Al entrenar: =models/model.joblib= y =models/metadata.json=.
+- =requirements.txt= con versiones fijas.
+
+** Flujo recomendado
+1. *Carga y validación*: columnas obligatorias, tipos y nulos.
+2. *EDA breve*: distribuciones, outliers, correlaciones; histograma de =precio=.
+3. *Preprocesado*:
+   - Numéricas: =SimpleImputer(strategy='median')= + (opcional) =StandardScaler=.
+   - Categóricas: =OneHotEncoder(handle_unknown='ignore')=.
+   - Pipeline: =ColumnTransformer= + =Pipeline=.
+   - Considerar =log(precio)= si está sesgado.
+4. *Modelado*:
+   - =LinearRegression= (baseline) y =RandomForestRegressor=.
+   - Añadir =Ridge= como alternativa.
+   - Hiperparámetros con =RandomizedSearchCV= (opcional).
+5. *Evaluación*:
+   - =train_test_split= 80/20 con =random_state=.
+   - Reportar MAE, RMSE y R².
+   - CV 5-fold; reportar media ± std.
+6. *Persistencia y metadata*:
+   - Guardar mejor modelo con =joblib=.
+   - =metadata.json= con fecha, versión sklearn, features, métricas.
+7. *Predict CLI*:
+   - =argparse= + fallback =input()=.
+   - Validar entradas; manejar categorías desconocidas.
+
+** Rúbrica (10 + bonus)
+| Criterio | Puntos | Qué se espera |
+|---------+--------+---------------|
+| Carga + validación robusta | 2 | columnas, tipos básicos, nulos, errores |
+| EDA breve | 1 | resumen + sanity checks |
+| Preprocesado con Pipeline | 2 | imputación + OHE + (scaler opcional) |
+| Entrenar modelos | 2 | Linear + RandomForest (+Ridge opcional) |
+| Evaluación correcta | 2 | MAE/RMSE/R² + split + CV |
+| Predict CLI | 1 | argparse + fallback input + validaciones |
+| BONUS: log(precio) | +0.5 | si mejora o está justificado |
+| BONUS: tests mínimos | +0.5 | tests de carga/predict |
+
+** Código (esqueleto incompleto)
+Los ficheros incompletos están en =ml-vivienda-ml1/src=.
+
+* Guía extra — Conseguir un dataset real (Comunidad de Madrid)
+** Resumen
+La Comunidad de Madrid publica conjuntos de datos en su *Catálogo de Datos Abiertos (CKAN)* y muchos aparecen también en =datos.gob.es=.
+
+** Fuentes principales
+| Fuente | Cobertura | Formatos | Acceso |
+|---|---:|---|---|
+| Catálogo Comunidad de Madrid (CKAN) | Toda la Comunidad | CSV; JSON; ZIP | Descarga directa; API CKAN |
+| datos.gob.es | Agregador nacional | CSV; JSON | Fichas con enlaces directos y licencia |
+
+** Pasos prácticos
+1. Buscar en el Catálogo (=datos.comunidad.madrid=) o en =datos.gob.es= con: =viviendas=, =transacciones=, =AVS=.
+2. Revisar ficha técnica: columnas, frecuencia, licencia.
+3. Descargar CSV/JSON (enlace de download o API CKAN).
+4. Preprocesar: normalizar columnas, filtrar por municipio/distrito, guardar copia con fecha.
+
+** Ejemplo de descarga rápida (plantilla)
+#+begin_src bash
+curl -L -o viviendas_cam.csv "https://datos.comunidad.madrid/dataset/.../download/viviendas.csv"
+#+end_src

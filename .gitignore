@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Data / models
+ml-vivienda-ml1/models/
+ml-vivienda-ml1/data/*.csv
+
+# Jupyter
+.ipynb_checkpoints/

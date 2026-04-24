@@ -1,0 +1,10 @@
+#+title: Pythonisas ML Lab
+#+author: Pythonisas
+#+date: 2026-04-24
+
+* Pythonisas ML Lab
+
+Este repositorio contiene laboratorios de introducción al *Aprendizaje Automático (Machine Learning)* orientados a estudiantes.
+
+** Labs
+- [[file:ml-vivienda-ml1/README.org][ML1 — Predicción de precios de vivienda (regresión)]]
