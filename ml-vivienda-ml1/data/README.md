@@ -4,7 +4,14 @@
 Genera un CSV con 200–500 filas con columnas:
 - m2, habitaciones, banos, zona, antiguedad, precio
 
-Así todo el mundo entrena el mismo día sin depender de descargas.
+Comando:
+```bash
+cd ml-vivienda-ml1
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python3 src/generate_dataset.py --out data/viviendas.csv --n 300 --seed 42
+```
 
 ### Opción B: dataset real (Comunidad de Madrid)
 Mira `../docs/conseguir-dataset-CAM.md`.
